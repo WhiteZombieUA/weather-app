@@ -4,6 +4,26 @@
     <h3>{{city}}</h3>
     <h5><weather-icon icon="current.icon" id="current-icon"></weather-icon> {{current.currently.summary}}</h5>
     <p>The temperature now is</p>
-    <span class="large">{{current.currently.temperature}} ° </span>
+    <span class="large">{{current.currently.temperature}}° </span>
+
+    <h5>Hourly</h5>
+    <ion-item ng-repeat="hour in current.hourly.data">
+      <div class="row">
+        <div class="col">{{hour.time * 1000 | date:'HH:mm:ss'}}</div>
+        <div class="col"><weather-icon icon="hour.icon" id="hour-icon"></weather-icon> {{hour.summary}}</div>
+        <div class="col">{{hour.temperature}}° </div>
+      </div>
+    </ion-item>
+
+    <h5>Daily</h5>
+    <ion-item ng-repeat="day in current.daily.data">
+      <div class="row">
+        <div class="col">{{day.time *1000 | date:'MM/dd/yyyy'}}</div>
+        <div class="col col-33"><weather-icon icon="day.icon" id="day-icon"></weather-icon> {{day.summary}}</div>
+        <div class="col">{{day.temperatureMin}}° {{day.temperatureMinTime * 1000 | date:'HH:mm:ss'}}</div>
+        <div class="col">{{day.temperatureMax}}° {{day.temperatureMaxTime * 1000 | date:'HH:mm:ss'}}</div>
+      </div>
+    </ion-item>
+
   </ion-content>
 </ion-view>

@@ -1,5 +1,5 @@
 angular.module('starter.controllers', ['ionic'])
-  .constant('FORECASTIO_KEY', 'your forecastio key here')
+  .constant('FORECASTIO_KEY', '7cdf57f59da58a141ac7799f4f8a31b1')
   .controller('HomeCtrl', function($scope,$state,Weather,DataStore) {
     //read default settings into scope
     console.log('inside home');
@@ -7,17 +7,35 @@ angular.module('starter.controllers', ['ionic'])
     var latitude  =  DataStore.latitude;
     var longitude = DataStore.longitude;
 
-    //call getCurrentWeather method in factory ‘Weather’
-    Weather.getCurrentWeather(latitude,longitude).then(function(resp) {
-      $scope.current = resp.data;
-      console.log('GOT CURRENT', $scope.current);
-      //debugger;
-    }, function(error) {
-      alert('Unable to get current conditions');
-      console.error(error);
-    });
+    if (DataStore.city == 'Current location') {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          DataStore.setLatitude( latitude = position.coords.latitude );
+          DataStore.setLongitude ( longitude = position.coords.longitude );
+
+          fetchWeather();
+        },
+        function() {
+          alert('Error getting location');
+        });
+    } else {
+      fetchWeather()
+    }
+
+    function fetchWeather() {
+      //call getCurrentWeather method in factory ‘Weather’
+      Weather.getCurrentWeather(latitude, longitude).then(function (resp) {
+        $scope.current = resp.data;
+        console.log('GOT CURRENT', $scope.current);
+        //debugger;
+      }, function (error) {
+        alert('Unable to get current conditions');
+        console.error(error);
+      });
+    }
 
   })
+
   .controller('LocationsCtrl', function($scope,$state, Cities,DataStore) {
     $scope.cities = Cities.all();
 

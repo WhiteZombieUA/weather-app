@@ -29,7 +29,8 @@ angular.module('starter.services', ['ngResource'])
       { id: 3, name: 'Los Angeles', lat: 34.0210 , lgn: -118.4117 },
       { id: 4, name: 'Lviv' ,lat: 49.8327 , lgn: 24.0122  },
       { id: 5, name: 'Frankfurt' ,lat:50.1213 , lgn: 8.6365 },
-      { id: 6, name: 'New Delhi' ,lat:28.6472 , lgn: 77.0932 }
+      { id: 6, name: 'New Delhi' ,lat:28.6472 , lgn: 77.0932 },
+      { id: 7, name: 'Current location' }
     ];
 
     return {
@@ -40,14 +41,26 @@ angular.module('starter.services', ['ngResource'])
         // Simple index lookup
         return cities[cityId];
       }
+      /*,
+      add: function (name, lat, lng) {
+        cities.push({
+          id: cities.length,
+          name: ,
+          lat: ,
+          lng
+        });
+      }
+      */
     }
   }).
   factory('DataStore', function() {
     //create datastore with default values
+
     var DataStore = {
-      city:       'Lviv',
-      latitude:   49.8444,
-      longitude:  24.0254};
+      city:       'Current location',
+      latitude:   0,
+      longitude:  0
+    };
 
     DataStore.setCity = function (value) {
       DataStore.city = value;
